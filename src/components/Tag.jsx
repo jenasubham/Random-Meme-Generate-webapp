@@ -1,27 +1,14 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Spinner from './Spinner';
+import useGif from '../hooks/useGif';
 
 const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
 const Tag = () => {
-  const [loading, setLoading] = useState(true);
-  const [gif, setGif] = useState('');
-  const [tag, setTag] = useState("");
 
-  async function fetchData(){
-    setLoading(true);
-    const url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=${tag}`;
-    const {data} = await axios.get(url);
-    const imageSource = data.data.images.downsized_large.url;
-    setGif(imageSource);
-    setLoading(false);
-  }
+  const [tag, setTag] = useState("Coder");
 
-  useEffect(()=>{
-    fetchData();
-  },[])
-
+  const {gif, loading, fetchData} = useGif(tag);
 
 
   return (
